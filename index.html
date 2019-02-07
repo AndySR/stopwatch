@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+</head>
+
+<body>
+  <script src="https://unpkg.com/react@16.3.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.3.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    class StopWatch extends React.Component {
+      constructor(props){
+        super(props);
+        this.state = {
+                lapse: 0,
+                running: false,
+                time: this.props.elapse * 1000,
+                flag: false,
+                play: false,
+                pause: true
+              };
+        this.url = "http://streaming.tdiradio.com:8000/house.mp3";
+        this.audio = new Audio(this.url);
+      }
+
+              play = () => {
+                this.setState({ play: true, pause: false })
+                  this.audio.play();
+                }
+
+                pause = () => {
+                this.setState({ play: false, pause: true })
+                  this.audio.pause();
+                }
+        handleRunClick = () => {
+          this.pause();
+          clearInterval(this.timer);
+          if (this.state.flag) {
+            clearInterval(this.timer);
+            this.setState({
+              lapse: 0,
+              running: false,
+              time: this.props.elapse * 1000,
+              flag: false
+            });
+          }
+          this.setState(state => {
+            if (state.running) {
+              clearInterval(this.timer);
+            } else {
+              const startTime = Date.now() - this.state.lapse;
+              this.timer = setInterval(() => {
+                if (this.state.time - this.state.lapse <= 10) {
+                  this.setState({
+                    lapse: this.state.time
+                  });
+                  clearInterval(this.timer);
+                }
+
+                this.setState(
+                  {
+                    lapse: Date.now() - startTime
+                  },
+                  () => {
+                    if (this.state.time - this.state.lapse <= 10){
+                      clearInterval(this.timer);
+                      this.setState({
+                        lapse: this.state.time,
+                        flag:true
+                      });
+                      this.play();
+                    } else {
+                      this.setState({
+                        flag:false
+                      });
+                    }
+
+                    console.log(this.state.lapse);
+                  }
+                );
+              }, 10);
+            }
+            return { running: !state.running };
+          });
+        };
+        handleClearClick = () => {
+          this.pause();
+          clearInterval(this.timer);
+          this.setState({
+            lapse: 0,
+            running: false,
+            time: this.props.elapse * 1000
+          });
+        };
+        getTime() {
+          this.setState({time: this.props.elapse * 1000})
+
+        }
+        componentWillUnmount() {
+          clearInterval(this.timer);
+        }
+        render() {
+          const { lapse, running, time } = this.state;
+          let timeLeft = Math.abs(time - lapse);
+          let timeSecond = Math.floor(timeLeft / 1000);
+          let miliSecond = timeLeft % 1000;
+
+          const buttonStyles = {
+            border: "1px solid #fc6d6d",
+            background: "#fc6d6d",
+            fontSize: "2rem",
+            padding: "2rem",
+            color:"white",
+            cursor:"pointer",
+            outline:"none",
+            margin: 5,
+            width: 200
+          };
+          return (
+            <div className="time__container">
+              <button className="set_time" onClick={() => this.getTime()}>SET</button>
+              <div className="card">
+
+                <div className="card__counter">
+                  <div id="num" className="card__counter__num">
+                    <span className="seconds">{running? timeSecond:this.props.elapse}</span>
+                    <div className="smalltext">Seconds</div>
+                  </div>
+                  <div id="num" className="card__counter__num">
+                    <span className="miliseconds">{miliSecond}</span>
+                    <div className="smalltext">milliseconds</div>
+                  </div>
+                  <div className="card__button">
+
+                    <button onClick={this.handleRunClick} style={buttonStyles}>
+                      {running ? "Stop" : "Start"}
+                    </button>
+                    <button onClick={this.handleClearClick} style={buttonStyles}>
+                      Clear
+                    </button>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+
+            </div>
+          );
+        }
+      }
+
+      class App extends React.Component {
+        state = { timeElapse: 40 };
+
+        setElapse(e) {
+          e.preventDefault();
+          const val = e.target.value;
+          if (e.target.validity.valid)
+            this.setState({ timeElapse: e.target.value });
+          else if (val === "" || val === "-")
+            this.setState({ timeElapse: val });
+        }
+        render() {
+          const { showStopWatch } = this.state;
+          return (
+            <div  className="container">
+              Show Stop Watch
+              <input
+                type="tel"
+                pattern="^-?[0-9]\d*\.?\d*$"
+                value={this.state.timeElapse}
+                onChange={e => this.setElapse(e)}
+                className="input__time"
+
+              />
+              <StopWatch elapse={this.state.timeElapse} />
+            </div>
+          );
+        }
+      }
+
+      const element = <App />;
+      ReactDOM.render(element, document.getElementById("root"));
+    </script>
+</body>
+
+</html>
