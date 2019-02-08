@@ -49,12 +49,12 @@ body:before {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* padding: 2rem 0.5rem; */
+  padding: 4rem 0.5rem;
   width: 30vw;
   height: 100%;
   font-size: 2rem;
   color: white;
-  padding-top: 2rem;
+  /* padding-top: 2rem; */
   /* transform: translate(50%, 0); */
   background-color: #343f4f;
   border-radius: 0.5rem;
