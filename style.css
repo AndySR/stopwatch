@@ -49,13 +49,24 @@ body:before {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* width: 50%; */
-  height: 80%;
+  /* padding: 2rem 0.5rem; */
+  width: 30vw;
+  height: 80vh;
   font-size: 2rem;
   color: white;
   padding-top: 1rem;
   /* transform: translate(50%, 0); */
   background-color: #343f4f;
+  border-radius: 0.5rem;
+  box-shadow: 0.5rem 1rem 2rem #343f4f;
+}
+.title {
+  display: block;
+  text-transform: capitalize;
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: sans-serif;
+  letter-spacing: 0.1rem;
 }
 .input__time {
   display: flex;
@@ -68,7 +79,7 @@ body:before {
   height: 3rem;
   font-size: 2rem;
   border-radius: 0.2rem;
-  padding: 0.2rem 0.5rem;
+  padding: 1rem 0.5rem;
 }
 .time__container {
   display: flex;
@@ -97,39 +108,49 @@ body:before {
 }
 .card .card__counter {
   width: 100%;
+  height: 100%;
   display: flex;
   font-family: "Anonymous Pro";
   font-weight: bold;
   flex-direction: column;
   color: white;
-  align-content: center;
+  justify-content: center;
   align-items: center;
+}
+.card .card__counter div {
+  margin-bottom: 2rem;
 }
 .card .card__counter .card__counter__num {
   text-align: center;
-  font-size: 15rem;
-  padding: 0 20rem;
+  width: 100%;
+  /* font-size: 15rem; */
+  /* padding: 0 5rem; */
 }
 .card .card__counter div > span {
-  padding: 1.5rem;
-  width: 18rem;
+  /* padding: 1.5rem; */
+  width: 40%;
   border-radius: 0.3rem;
   background: #00816a;
   display: inline-block;
 }
-/* .card .card__counter div > span.seconds {
+.card .card__counter div > span.seconds {
+  padding: 10px !important;
+  font-size: 10rem;
 }
 .card .card__counter div > span.miliseconds {
   padding: 10px !important;
-  font-size: 40px;
-} */
+  font-size: 4rem;
+}
 .smalltext {
-  padding-top: 0.5rem;
+  padding-top: 1rem;
   font-size: 1.6rem;
+  text-transform: capitalize;
+  letter-spacing: 0.1rem;
+  font-weight: 500;
 }
 
 .card .card__counter span {
-  margin-top: 4.5rem;
+  /* margin-top: 4.5rem; */
   font-size: 6.5rem;
   opacity: 1;
   transition: opacity 0.3s;
@@ -137,12 +158,28 @@ body:before {
 }
 .card .card__button {
   width: 100%;
-  height: 7.5rem;
+  /* height: 7.5rem; */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
-
+.card__button__item {
+  border: 1px solid #fc6d6d;
+  border-radius: 0.5rem;
+  background: #fc6d6d;
+  font-size: 2rem;
+  padding: 2rem 3rem;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  /* margin: 5rem; */
+  width: 40%;
+  transition: all 0.2s;
+}
+.card__button__item:active {
+  box-shadow: 0.2rem 0.5rem grey;
+  transform: translateY(0.5rem);
+}
 .card .card__button.card__button--triggered {
   animation: button 3.9s linear;
 }
@@ -153,6 +190,9 @@ body:before {
   width: 100%;
   height: 100%;
   box-shadow: inset 0px 0px 85px 70px #343f4f;
+}
+.animation {
+  animation: colorchange 1s infinite;
 }
 @keyframes button {
   4.9% {
@@ -208,6 +248,42 @@ body:before {
     height: 75px;
     border-radius: 50%;
     visibility: visible;
+  }
+}
+@keyframes colorchange {
+  0% {
+    background: red;
+
+    transform: scale(1);
+  }
+  40% {
+    background: #fc6d6d;
+
+    transform: scale(1.1);
+  }
+  70% {
+    background: #cf6d6d;
+    transform: scale(1.15);
+  }
+  100% {
+    background: red;
+
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes colorchange /* Safari and Chrome - necessary duplicate */ {
+  0% {
+    background: red;
+  }
+  40% {
+    background: #fc6d6d;
+  }
+  70% {
+    background: #cf6d6d;
+  }
+  100% {
+    background: red;
   }
 }
 /* .shadow {

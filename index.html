@@ -23,21 +23,28 @@
                 time: this.props.elapse * 1000,
                 flag: false,
                 play: false,
-                pause: true
+                pause: true,
+                bcgClass:""
               };
-        this.url = "http://streaming.tdiradio.com:8000/house.mp3";
+        // this.url = "http://streaming.tdiradio.com:8000/house.mp3";
+        // this.url = "./红日.mp3";
+        // 光辉岁月.mp3
+        // this.url = "./it's my life.mp3";
+        this.url = "./光辉岁月.mp3"; 
+
         this.audio = new Audio(this.url);
       }
 
-              play = () => {
-                this.setState({ play: true, pause: false })
-                  this.audio.play();
-                }
+      play = () => {
+        this.audio = new Audio(this.url);
+        this.setState({ play: true, pause: false })
+          this.audio.play();
+        }
 
-                pause = () => {
-                this.setState({ play: false, pause: true })
-                  this.audio.pause();
-                }
+        pause = () => {
+        this.setState({ play: false, pause: true })
+          this.audio.pause();
+        }
         handleRunClick = () => {
           this.pause();
           clearInterval(this.timer);
@@ -47,7 +54,8 @@
               lapse: 0,
               running: false,
               time: this.props.elapse * 1000,
-              flag: false
+              flag: false,
+              bcgClass:"animation"
             });
           }
           this.setState(state => {
@@ -72,12 +80,14 @@
                       clearInterval(this.timer);
                       this.setState({
                         lapse: this.state.time,
-                        flag:true
+                        flag:true,
+                        bcgClass:"animation"
                       });
                       this.play();
                     } else {
                       this.setState({
-                        flag:false
+                        flag:false,
+                        bcgClass:""
                       });
                     }
 
@@ -95,7 +105,8 @@
           this.setState({
             lapse: 0,
             running: false,
-            time: this.props.elapse * 1000
+            time: this.props.elapse * 1000,
+            bcgClass:""
           });
         };
         getTime() {
@@ -111,17 +122,7 @@
           let timeSecond = Math.floor(timeLeft / 1000);
           let miliSecond = timeLeft % 1000;
 
-          const buttonStyles = {
-            border: "1px solid #fc6d6d",
-            background: "#fc6d6d",
-            fontSize: "2rem",
-            padding: "2rem",
-            color:"white",
-            cursor:"pointer",
-            outline:"none",
-            margin: 5,
-            width: 200
-          };
+
           return (
             <div className="time__container">
               <button className="set_time" onClick={() => this.getTime()}>SET</button>
@@ -129,19 +130,19 @@
 
                 <div className="card__counter">
                   <div id="num" className="card__counter__num">
-                    <span className="seconds">{running? timeSecond:this.props.elapse}</span>
+                    <span className={`${this.state.bcgClass} seconds`}>{timeSecond}</span>
                     <div className="smalltext">Seconds</div>
                   </div>
                   <div id="num" className="card__counter__num">
-                    <span className="miliseconds">{miliSecond}</span>
-                    <div className="smalltext">milliseconds</div>
+                    <span className={`${this.state.bcgClass} miliseconds`}>{miliSecond}</span>
+                    <div className="smalltext">Milliseconds</div>
                   </div>
                   <div className="card__button">
 
-                    <button onClick={this.handleRunClick} style={buttonStyles}>
+                    <button onClick={this.handleRunClick} className="card__button__item" >
                       {running ? "Stop" : "Start"}
                     </button>
-                    <button onClick={this.handleClearClick} style={buttonStyles}>
+                    <button onClick={this.handleClearClick} className="card__button__item">
                       Clear
                     </button>
                   </div>
@@ -173,7 +174,7 @@
           const { showStopWatch } = this.state;
           return (
             <div  className="container">
-              Show Stop Watch
+              <span className="title">Show Stop Watch</span>
               <input
                 type="tel"
                 pattern="^-?[0-9]\d*\.?\d*$"
