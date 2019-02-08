@@ -97,6 +97,7 @@ body:before {
   border: none;
   background-color: #00816a;
   color: white;
+  margin-bottom: 1rem;
 }
 .card {
   display: flex;
