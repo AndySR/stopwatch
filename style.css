@@ -51,10 +51,10 @@ body:before {
   align-items: center;
   /* padding: 2rem 0.5rem; */
   width: 30vw;
-  height: 80vh;
+  height: 75vh;
   font-size: 2rem;
   color: white;
-  padding-top: 1rem;
+  padding-top: 2rem;
   /* transform: translate(50%, 0); */
   background-color: #343f4f;
   border-radius: 0.5rem;
@@ -131,6 +131,7 @@ body:before {
   width: 40%;
   border-radius: 0.3rem;
   background: #00816a;
+  text-align: center;
   display: inline-block;
 }
 .card .card__counter div > span.seconds {
